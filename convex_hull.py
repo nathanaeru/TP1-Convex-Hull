@@ -26,6 +26,7 @@ def _y_value_at_x(first: Point, second: Point, x: float) -> float:
     """
     Returns the y-coordinate where the segment intersects the vertical line x.
     """
+
     if first.x == second.x:
         return (first.y + second.y) / 2
     return first.y + (second.y - first.y) * (x - first.x) / (second.x - first.x)

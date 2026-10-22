@@ -26,3 +26,19 @@ class Polygon:
 
     def __str__(self):
         return f"{', '.join(str(v) for v in self.vertices)}"
+
+    def area(self) -> float:
+        """
+        Calculate the area of the polygon using the Shoelace formula. Assumes the vertices are ordered clockwise or counter-clockwise.
+        """
+
+        n = len(self.vertices)
+        if n < 3:
+            return 0.0  # Not a polygon
+
+        area = 0.0
+        for i in range(n):
+            j = (i + 1) % n
+            area += self.vertices[i].x * self.vertices[j].y
+            area -= self.vertices[j].x * self.vertices[i].y
+        return abs(area) / 2.0
