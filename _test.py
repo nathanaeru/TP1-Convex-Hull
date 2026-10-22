@@ -1,7 +1,7 @@
 import pytest
 
 from convex_hull import convex_hull
-from data_structures import Point
+from data_structures import Point, Polygon
 
 
 def hull_coordinates(points):
@@ -46,3 +46,21 @@ def test_convex_hull_of_collinear_points_contains_only_endpoints():
 
     assert set(result) == {(-2, -2), (3, 3)}
     assert len(result) == 2
+
+
+@pytest.mark.parametrize(
+    ("points", "expected_area"),
+    [
+        ([], 0.0),
+        ([(1, 2)], 0.0),
+        ([(0, 0), (0, 2)], 0.0),
+        ([(0, 0), (0, 2), (3, 2), (3, 0)], 6.0),
+        ([(0, 0), (0, 4), (3, 0)], 6.0),
+        ([(0, 0), (4, 0), (4, 3), (0, 3)], 12.0),
+        ([(1, 1), (2, 3), (3, 1)], 2.0),
+    ],
+)
+def test_polygon_area_for_clockwise_vertices(points, expected_area):
+    polygon = Polygon([Point(x, y) for x, y in points])
+
+    assert polygon.area() == expected_area
